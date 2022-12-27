@@ -1,5 +1,7 @@
 package hello.itemservice.domain.item;
 
+import hello.itemservice.web.validation.form.ItemSaveForm;
+import hello.itemservice.web.validation.form.ItemUpdateForm;
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 
@@ -12,18 +14,18 @@ import javax.validation.constraints.NotNull;
 //권장하지 않음
 public class Item {
 
-    @NotNull(groups = UpdateCheck.class) //수정 요구사항 추가
+    //@NotNull(groups = UpdateCheck.class) //수정 요구사항 추가
     private Long id;
 
-    @NotBlank(groups = {SaveCheck.class, UpdateCheck.class})
+    //@NotBlank(groups = {SaveCheck.class, UpdateCheck.class})
     private String itemName;
 
-    @NotNull(groups = {SaveCheck.class, UpdateCheck.class})
-    @Range(min = 1000, max = 1000000, groups = {SaveCheck.class, UpdateCheck.class})
+    //@NotNull(groups = {SaveCheck.class, UpdateCheck.class})
+    //@Range(min = 1000, max = 1000000, groups = {SaveCheck.class, UpdateCheck.class})
     private Integer price;
 
-    @NotNull(groups = {SaveCheck.class, UpdateCheck.class})
-    @Max(value = 9999, groups = SaveCheck.class)
+    //@NotNull(groups = {SaveCheck.class, UpdateCheck.class})
+    //@Max(value = 9999, groups = SaveCheck.class)
     private Integer quantity;
 
     public Item() {
@@ -33,5 +35,17 @@ public class Item {
         this.itemName = itemName;
         this.price = price;
         this.quantity = quantity;
+    }
+
+    public Item(ItemSaveForm form){
+        this.itemName = form.getItemName();
+        this.price = form.getPrice();
+        this.quantity = form.getQuantity();
+    }
+
+    public Item(ItemUpdateForm form){
+        this.itemName = form.getItemName();
+        this.price = form.getPrice();
+        this.quantity = form.getQuantity();
     }
 }
